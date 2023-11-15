@@ -15,16 +15,17 @@ const TablaClientes = () => {
     const [cliente, setCliente] = useState({});
     const [listUpdateCliente, setListUpdateCliente] = useState(false);
 
+    const getClientes = () => {
+        axios.get(url).then((response) => {
+            setClientes(response.data);
+        }).catch(error =>{
+            setError(error);
+            console.log(error);
+        });
+    }
 
     useEffect(() => {
-        const getClientes = () => {
-            axios.get(url).then((response) => {
-                setClientes(response.data);
-            }).catch(error =>{
-                setError(error);
-                console.log(error);
-            });
-        }
+        
         getClientes();
         setListUpdateCliente(false);
     }, [listUpdateCliente]);
@@ -70,8 +71,8 @@ const TablaClientes = () => {
             name: 'Acciones',
             cell: (row) => (
                 <>
-                    <span onClick={() => { seleccionarCliente(row); handleShow() }} className='btn btn-primary'><AiTwotoneEdit /></span>{'     '}
-                    <span onClick={() => { seleccionarCliente(row); handleShowDelete() }} className='btn btn-danger'><AiTwotoneDelete /></span>
+                    <span onClick={() => { seleccionarCliente(row); handleShow() }} className='text-blue-600'><AiTwotoneEdit /></span>{'     '}
+                    <span onClick={() => { seleccionarCliente(row); handleShowDelete() }} className='text-red-600'><AiTwotoneDelete /></span>
                 </>
             ),
 

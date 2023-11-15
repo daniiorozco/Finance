@@ -1,12 +1,14 @@
+import { Header } from '../../components/Header';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import Buscador from "./Buscador";
-import TablaClientes from './TablaClientes';
+import Buscador from "../../components/Search";
+import TablaClientes from '../../components/TableCustomers';
 
 const Clientes = () => {
 
     return (
         <>
+        <Header />
             <main className="container-fluid">
                 <div className='row d-flex '>
                     <div className=' d-flex flex-column align-items-center '>
