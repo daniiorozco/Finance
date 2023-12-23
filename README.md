@@ -26,3 +26,7 @@ node app.js
 
 en la carpeta de /client se encuentra la parte de Front end que esta hecha en react.
 en la carpeta de /server se encuentra la parte de Back end que esta hecha en node.js .
+
+## version de node
+Backend 16
+Frontend 18
