@@ -10,8 +10,15 @@ const urlPrestamo = 'http://localhost:8000/prestamos';
 const AddPrestamo = () => {
 
     const [clientes, setClientes] = useState([]);
-    const [prestamo, setPrestamo] = useState({});
+    const [prestamo, setPrestamo] = useState({
+        id_cliente: '',
+        cantidad_prestada: '',
+        total_deuda: '',
+        interes: ''
+
+    });
     const [error, setError] = useState(null);
+    const [totalDeuda, setTotalDeuda] = useState(0);
 
     const inputIdCliente = useRef(null);
     const inputPrestamo = useRef(null);
@@ -22,7 +29,7 @@ const AddPrestamo = () => {
     useEffect(() => {
         axios.get(url).then((response) => {
             setClientes(response.data)
-        }).catch(error =>{
+        }).catch(error => {
             setError(error);
             console.log(error);
         });
@@ -42,28 +49,33 @@ const AddPrestamo = () => {
         if (prestamo !== null && interes !== null && !isNaN(prestamo) && !isNaN(interes)) {
             let totalInteres = (prestamo * interes) / 100;
             let totalDeuda = (parseFloat(prestamo) + parseFloat(totalInteres));
-            totalAdeudado.current.value = Math.floor(totalDeuda);
+            setTotalDeuda(Math.floor(totalDeuda));
         } else {
             console.log("Ingrese los datos correctos");
         }
     }
 
     let handleCalcular = () => {
+        
         totalAdeudado.current.value = '';
-
         let prestamo = inputPrestamo.current.value;
         let interes = inputInteres.current.value;
-
         handleValidarPrestamoEInteres(prestamo, interes)
     }
 
     let handleCrearPrestamo = () => {
 
+        // Agregar totalDeuda al objeto prestamo
+        const prestamoConTotalDeuda = {
+            ...prestamo,
+            total_deuda: totalDeuda,
+        };
+
         axios.post(urlPrestamo,
-            prestamo
+            prestamoConTotalDeuda
         ).then((response) => {
             setPrestamo(response.data)
-        }).catch(error =>{
+        }).catch(error => {
             setError(error);
             console.log(error);
         });
@@ -103,7 +115,7 @@ const AddPrestamo = () => {
                             <input className='btn btn-primary' type="button" value="Calcular" onClick={handleCalcular} />
                             <Form.Group className="mb-3" controlId="total_deuda">
                                 <Form.Label >Total del prestamo con el interes:</Form.Label>
-                                <Form.Control type="number" autoComplete="off" value={total_deuda} disabled name='total_deuda' ref={totalAdeudado} onChange={handleChange} />
+                                <Form.Control type="number" autoComplete="off" value={totalDeuda} disabled name='total_deuda' ref={totalAdeudado} onChange={handleChange} />
                             </Form.Group>
                             <div className='d-flex justify-content-center'>
                                 <Button variant="primary" type="submit" name='guardar' >

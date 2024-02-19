@@ -11,7 +11,12 @@ const AddCliente = () => {
 
     const [validated, setValidated] = useState(false);
     let navigate = useNavigate()
-    const [cliente, setCliente] = useState({});
+    const [cliente, setCliente] = useState({
+        nombre : '',
+        apellido : '',
+        dni : '',
+        direccion : ''
+    });
 
     let handleChange = ({ target: { name, value } }) => {
         setCliente({ ...cliente, [name]: value });
@@ -26,7 +31,7 @@ const AddCliente = () => {
             cliente
         ).then((response) => {
             setCliente(response.data)
-            navigate('/Prestamos')
+            navigate('/Clientes')
         }).catch(error =>{
             setError(error);
             console.log(error);

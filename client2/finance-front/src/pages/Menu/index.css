@@ -1,0 +1,7 @@
+a{
+    text-decoration: none;
+    text-decoration-color: currentColor;
+}
+a:visited{
+    color: white;
+}

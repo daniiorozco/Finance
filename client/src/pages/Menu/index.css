@@ -1,0 +1,11 @@
+main{
+    height: 600px;
+}
+button{
+    -webkit-box-shadow: 6px 0px 5px 0px rgba(159,171,245,1);
+    -moz-box-shadow: 6px 0px 5px 0px rgba(159,171,245,1);
+    box-shadow: 6px 0px 5px 0px rgba(159,171,245,1);
+}
+.link-prestamos{
+    text-decoration: none;
+}

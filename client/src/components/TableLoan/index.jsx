@@ -1,5 +1,6 @@
 import DataTable from "react-data-table-component";
 import { AiTwotoneEdit, AiTwotoneDelete } from "react-icons/ai";
+import {FcEditImage, FcEmptyTrash } from "react-icons/fc";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -10,10 +11,14 @@ const TablaPrestamos = ()=>{
     //estados
     const [prestamos,setPrestamos] = useState([]);
 
-    useEffect(()=>{
+    const getPrestamos = ()=>{
         axios.get(url).then((response)=>{
             setPrestamos(response.data);
         });
+    }
+
+    useEffect(()=>{
+        getPrestamos()
     },[]);
 
 
@@ -33,8 +38,8 @@ const TablaPrestamos = ()=>{
             name: 'Acciones',
             cell: (row) => (
                 <>
-                    <span  className='btn btn-primary'><AiTwotoneEdit /></span>{'     '}
-                    <span  className='btn btn-danger'><AiTwotoneDelete /></span>
+                    <span  className='w-7'><FcEditImage /></span>{'     '}
+                    <span  className='w-7'><FcEmptyTrash /></span>
                 </>
             ),
 

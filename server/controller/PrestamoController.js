@@ -1,4 +1,5 @@
 import Prestamo from '../models/prestamo.js';
+import { validarCamposPrestamo } from '../validaciones/validacion.js';
 
 //** Métodos para el CRUD **/
 
@@ -27,6 +28,9 @@ export const getPrestamo = async (req, res) => {
 //Crear un registro
 export const createPrestamo = async (req, res) => {
     try {
+        // Validar los campos antes de continuar
+        validarCamposPrestamo(req.body);
+
         await Prestamo.sequelize.query('CALL spi_prestamo (:id_cliente , :cantidad_prestada, :total_deuda, :interes)', {
             replacements: {
                 id_cliente:        req.body.id_cliente,
