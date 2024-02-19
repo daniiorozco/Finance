@@ -1,0 +1,22 @@
+[
+    {
+        "path" : "/",
+        "element": "<Home />"
+    },
+    {
+        "path" : "/prestamos",
+        "element": "<Prestamos />"
+    },
+    {
+        "path" : "/cuotas",
+        "element": "<Cuotas />"
+    },
+    {
+        "path" : "/clientes",
+        "element": "<Clientes />"
+    },
+    {
+        "path" : "/cobro",
+        "element": "<Cobro />"
+    }
+]
