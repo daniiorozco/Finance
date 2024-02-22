@@ -89,7 +89,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
+/* function createData(name, calories, fat) {
   return { name, calories, fat };
 }
 
@@ -107,16 +107,16 @@ const rows = [
   createData("Marshmallow", 318, 0),
   createData("Nougat", 360, 19.0),
   createData("Oreo", 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+].sort((a, b) => (a.calories < b.calories ? -1 : 1)); */
 
-export const TableComponent = ({ edit}) => {
+export const TableComponent = ({ data , edit}) => {
   
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  /* const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0; */
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -143,18 +143,18 @@ export const TableComponent = ({ edit}) => {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
           ).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell
                 component="th"
                 scope="row"
               >
-                {row.name}
+                {row.nombre}
               </TableCell>
               <TableCell>
-                {row.calories}
+                {row.apellido}
               </TableCell>
               <TableCell
                 style={{ width: 160 }}
@@ -170,18 +170,18 @@ export const TableComponent = ({ edit}) => {
               </TableCell>
             </TableRow>
           ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
+          {rowsPerPage > 0 && data.length === 0 && (
+              <TableRow style={{ height: 53 * rowsPerPage }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={3}
-              count={rows.length}
+              count={data.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
@@ -200,4 +200,9 @@ export const TableComponent = ({ edit}) => {
     </TableContainer>
     </Box>
   );
+};
+
+TableComponent.propTypes = {
+  data: PropTypes.array.isRequired,
+  edit: PropTypes.string.isRequired,
 };

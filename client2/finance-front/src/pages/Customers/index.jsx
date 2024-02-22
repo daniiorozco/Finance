@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, IconButton } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import Header from "../../components/Header";
@@ -6,9 +8,20 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import { TableComponent } from "../../components/TableComponent";
 import './index.css';
+import { fetchCustomers } from '../../store/slices/customersSlice';
+
 
 const Customers = () => {
+  // Obtener datos de clientes del store de Redux
+  const dispatch = useDispatch();
+  const { list: customers, loading, error } = useSelector((state) => state.customers);
  
+  useEffect(() => {
+    dispatch(fetchCustomers());
+  }, [dispatch]);
+
+  if (loading) return <div>Cargando clientes...</div>;
+  if (error) return <div>Error: {error}</div>;
   return (
     <>
       <Box>
@@ -43,7 +56,7 @@ const Customers = () => {
                 <Link to="/nuevoCliente">Nuevo Cliente</Link>
               </Button>
             </Box>
-            <TableComponent edit='/editarCliente'  />
+            <TableComponent data={customers} edit='/editarCliente'  />
           </Box>
         </Box>
         <Footer position={'absolute'}/>

@@ -30,3 +30,8 @@ en la carpeta de /server se encuentra la parte de Back end que esta hecha en nod
 ## version de node
 Backend 16
 Frontend 18
+
+## docker
+Comando para front
+docker build -t daniela9997/finance:v1.0  .
+docker run  -d  daniela9997/finance:v1.0

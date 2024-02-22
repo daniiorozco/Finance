@@ -1,14 +1,25 @@
-FROM node:18-alpine as build-deps
+# Etapa de construcción
+FROM node:18 AS builder
 
 WORKDIR /app
-COPY . .
-RUN npm install 
-RUN  npm run build
 
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Etapa de producción
 FROM nginx:1.19-alpine
 
-COPY ./nginx/default.conf /etc/nginx/templates/
+# Copia los archivos estáticos compilados de la aplicación React desde la etapa de construcción
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY --from=build-deps /app/build /usr/share/nginx/html/
+# Exponer el puerto 80 para que pueda ser accesible desde fuera del contenedor
+EXPOSE 80
 
-EXPOSE 5001
+# Comando para iniciar NGINX en modo daemon
+CMD ["nginx", "-g", "daemon off;"]
+
